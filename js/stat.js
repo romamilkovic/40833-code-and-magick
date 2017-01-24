@@ -13,16 +13,17 @@ window.renderStatistics = function(ctx, names, times) {
   var cloudShadowWidth = 10;
   var cloudShadowColor = 'rgba(0, 0, 0, 0.7)';
 
-  var cloudPadding = 40;
+  var cloudPadding = 30;
 
-  var messageText = 'Ура вы победили!\nСписок результатов:';
+  var messageTextCongrats = 'Ура вы победили!';
+  var messageTextInfo = 'Список результатов:';
   var messageTextX = startX + cloudPadding;
   var messageTextY = startY + cloudPadding;
 
   var fontFamily = 'PT Mono';
   var fontSize = 16;
   var fontColor = '#000';
-  var fontLineHeight = 1.6 * fontSize;
+  var fontLineHeight = 1.2 * fontSize;
 
   // Функция для отрисовки облака
   function cloudDraw(x, y, width, height, color) {
@@ -33,9 +34,11 @@ window.renderStatistics = function(ctx, names, times) {
   // Функция для вывода текстового сообщения
   function printText(text, x, y) {
     ctx.fillStyle = fontColor;
-    ctx.font = fontSize + fontFamily;
+    ctx.font = fontSize + 'px ' + fontFamily;
     ctx.fillText(text, x, y);
   }
+
+  console.log(fontSize + 'px ' + fontFamily);
 
   // Отрисовываем сперва тень от облака
   cloudDraw(startX + cloudShadowWidth, startY + cloudShadowWidth, cloudWidth, cloudHeight, cloudShadowColor);
@@ -44,36 +47,45 @@ window.renderStatistics = function(ctx, names, times) {
   cloudDraw(startX, startY, cloudWidth, cloudHeight, cloudColor);
 
   // Выводим текстовое сообщение
-  printText(messageText, messageTextX, messageTextY);
+  printText(messageTextCongrats, messageTextX, messageTextY);
+  printText(messageTextInfo, messageTextX, messageTextY + fontLineHeight);
 
   // Отрисовываем колонки
-  var max = -1;
-
-  for(var i = 0 ; i < times.length; i++ ) {
-    var time = times[i];
-    if (time > max) {
-      max = time;
-    }
-  }
-
   var histoHeight = 150;
   var histoX = startX + cloudPadding;
+  var histoY = 100;
 
   var columnWidth = 40;
-  var columnGutter = 80;
+  var columnGutter = 50;
 
-  var step = histoHeight / -max;
+  var maxValue = Math.max.apply(Math, times);
+
+  function getColumnHeight(val) {
+    return histoHeight * val / maxValue;
+  }
+
+  function drawColumn(ctx, idx, color) {
+    var columnHeight = getColumnHeight(times[idx]);
+
+    var labelOffset = 10;
+    var nameOffset = 20;
+
+    var x = histoX + idx * (columnWidth + columnGutter);
+    var yBar = histoY + histoHeight - columnHeight;
+    var yLabel = yBar - labelOffset;
+    var textLabel = times[idx].toFixed(0);
+    var yName = histoY + histoHeight + nameOffset;
+    var name = names[i];
+
+    ctx.fillStyle = color;
+    ctx.fillRect(x, yBar, columnWidth, columnHeight);
+    ctx.fillStyle = fontColor;
+    ctx.fillText(textLabel, x, yLabel);
+    ctx.fillText(name, x, yName);
+  }
 
   for (var i = 0; i < times.length; i++) {
-    var name = names[i];
-    var time = times[i].toFixed(0);
-
     var columnColor = names[i] === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 0, 255, ' + Math.random() + ')';
-
-    var columnHeight = step * time;
-
-    printText(time, histoX + columnGutter * i, 100);
-    cloudDraw(histoX + columnGutter * i, histoX + 100, columnWidth, columnHeight, columnColor);
-    printText(name, histoX + columnGutter * i, 100 + histoHeight + 10);
+    drawColumn(ctx, i, columnColor);
   }
 }

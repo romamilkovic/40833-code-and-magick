@@ -38,8 +38,6 @@ window.renderStatistics = function(ctx, names, times) {
     ctx.fillText(text, x, y);
   }
 
-  console.log(fontSize + 'px ' + fontFamily);
-
   // Отрисовываем сперва тень от облака
   cloudDraw(startX + cloudShadowWidth, startY + cloudShadowWidth, cloudWidth, cloudHeight, cloudShadowColor);
 

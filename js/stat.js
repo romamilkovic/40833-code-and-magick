@@ -83,7 +83,7 @@ window.renderStatistics = function(ctx, names, times) {
   }
 
   for (var i = 0; i < times.length; i++) {
-    var columnColor = names[i] === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 0, 255, ' + Math.random() + ')';
+    var columnColor = names[i] === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'rgb(0, 50, ' + (Math.floor(Math.random() * 256)) + ')';
     drawColumn(ctx, i, columnColor);
   }
 }

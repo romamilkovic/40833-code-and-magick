@@ -1,6 +1,6 @@
 'use strict';
 
-window.renderStatistics = function(ctx, names, times) {
+window.renderStatistics = function (ctx, names, times) {
 
   // Объявляем необходимые переменные
   var startX = 100;
@@ -28,7 +28,7 @@ window.renderStatistics = function(ctx, names, times) {
   // Функция для отрисовки облака
   function cloudDraw(x, y, width, height, color) {
     ctx.fillStyle = color;
-    ctx.fillRect(x, y, width, height)
+    ctx.fillRect(x, y, width, height);
   }
 
   // Функция для вывода текстового сообщения
@@ -62,7 +62,7 @@ window.renderStatistics = function(ctx, names, times) {
     return histoHeight * val / maxValue;
   }
 
-  function drawColumn(ctx, idx, color) {
+  function drawColumn(idx, color) {
     var columnHeight = getColumnHeight(times[idx]);
 
     var labelOffset = 10;
@@ -86,4 +86,4 @@ window.renderStatistics = function(ctx, names, times) {
     var columnColor = names[i] === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'rgb(0, 50, ' + (Math.floor(Math.random() * 256)) + ')';
     drawColumn(ctx, i, columnColor);
   }
-}
+};

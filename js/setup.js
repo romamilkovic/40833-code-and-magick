@@ -1,3 +1,5 @@
+'use strict'
+
 var setupWindow = document.querySelector('.setup');
 var setupToggle = document.querySelector('.setup-open');
 var setupClose = document.querySelector('.setup-close');
@@ -31,12 +33,12 @@ var fireballColors = [
 // Функция для открытия окна
 var setupWindowShow = function () {
   setupWindow.classList.remove('invisible');
-}
+};
 
 // Функция для закрытия окна
 var setupWindowClose = function () {
   setupWindow.classList.add('invisible');
-}
+};
 
 // По клику открываем окно
 setupToggle.addEventListener('click', setupWindowShow);

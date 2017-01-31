@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var setupWindow = document.querySelector('.setup');
 var setupToggle = document.querySelector('.setup-open');

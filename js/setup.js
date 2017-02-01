@@ -1,8 +1,8 @@
 'use strict';
 
 var setupWindow = document.querySelector('.setup');
-var setupToggle = document.querySelector('.setup-open');
-var setupClose = document.querySelector('.setup-close');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setupWindow.querySelector('.setup-close');
 var inputName = document.querySelector('.setup-user-name');
 var wizardCoat = document.querySelector('#wizard-coat');
 var wizardEyes = document.querySelector('#wizard-eyes');
@@ -41,7 +41,7 @@ var setupWindowClose = function () {
 };
 
 // По клику открываем окно
-setupToggle.addEventListener('click', setupWindowShow);
+setupOpen.addEventListener('click', setupWindowShow);
 
 // По клику удаляем окно
 setupClose.addEventListener('click', setupWindowClose);
@@ -49,20 +49,26 @@ setupClose.addEventListener('click', setupWindowClose);
 // Делаем инпут обязательным
 inputName.required = true;
 
+// Ограничиваем макс. кол-во символов
+inputName.maxlength = 50;
+
+// Создаем функцию для вычисления рандомного цвета
+function getRandomColor(colors) {
+  var randomNumber = Math.floor(Math.random() * colors.length);
+  return colors[randomNumber];
+}
+
 // Меняем цвет накидки мага по клику
 wizardCoat.addEventListener('click', function () {
-  var colorNumber = Math.floor(Math.random() * wizardCoatColors.length);
-  wizardCoat.style.fill = wizardCoatColors[colorNumber];
+  wizardCoat.style.fill = getRandomColor(wizardCoatColors);
 });
 
 // Меняем цвет глаз мага по клику
 wizardEyes.addEventListener('click', function () {
-  var colorNumber = Math.floor(Math.random() * wizardEyesColors.length);
-  wizardEyes.style.fill = wizardEyesColors[colorNumber];
+  wizardEyes.style.fill = getRandomColor(wizardEyesColors);
 });
 
 // Меняем цвет фаерболла по клику
 fireball.addEventListener('click', function () {
-  var colorNumber = Math.floor(Math.random() * fireballColors.length);
-  fireball.style.background = fireballColors[colorNumber];
+  fireball.style.background = getRandomColor(fireballColors);
 });

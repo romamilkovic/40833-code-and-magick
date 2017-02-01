@@ -3,10 +3,10 @@
 var setupWindow = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = setupWindow.querySelector('.setup-close');
-var inputName = document.querySelector('.setup-user-name');
-var wizardCoat = document.querySelector('#wizard-coat');
-var wizardEyes = document.querySelector('#wizard-eyes');
-var fireball = document.querySelector('.setup-fireball-wrap');
+var inputName = setupWindow.querySelector('.setup-user-name');
+var wizardCoat = setupWindow.querySelector('#wizard-coat');
+var wizardEyes = setupWindow.querySelector('#wizard-eyes');
+var fireball = setupWindow.querySelector('.setup-fireball-wrap');
 var wizardCoatColors = [
   'rgb(101, 137, 164)',
   'rgb(241, 43, 107)',

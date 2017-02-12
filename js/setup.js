@@ -61,11 +61,6 @@ fireball.addEventListener('click', function () {
   fireball.style.background = getRandomColor(fireballColors);
 });
 
-// Проверяем было ли нажатие
-var isActivateEvent = function (event) {
-  return event.keyCode && event.keyCode === ENTER_KEY_CODE;
-};
-
 // Метод для открытия диалога
 var setupWindowShow = function () {
   setupWindow.classList.remove('invisible');
@@ -91,24 +86,25 @@ var setupWindowKeyDownHandler = function (event) {
   }
 };
 
-setupOpen.addEventListener('click', setupWindowShow);
-setupOpen.addEventListener('keydown', function (event) {
-  if (isActivateEvent(event)) {
-    setupWindowShow();
-  }
-});
-
-setupClose.addEventListener('click', setupWindowClose);
-setupClose.addEventListener('keydown', function (event) {
-  if (isActivateEvent(event)) {
-    setupWindowClose();
-  }
-});
-
-setupSubmit.addEventListener('click', setupWindowClose);
-setupSubmit.addEventListener('keydown', function (event) {
-  if (isActivateEvent(event)) {
+// Метод который слушает событие на кнопку ENTER, если событие произошло – закрывает диалог отменяет действие по умолчанию, например Submit в форме
+var setupWindowCloseKeyDownEventHandler = function () {
+  if (event.keyCode === ENTER_KEY_CODE) {
     event.preventDefault();
     setupWindowClose();
   }
-});
+};
+
+var setupWindowShowKeyDownEventHandler = function () {
+  if (event.keyCode === ENTER_KEY_CODE) {
+    setupWindowShow();
+  }
+};
+
+setupOpen.addEventListener('click', setupWindowShow);
+setupOpen.addEventListener('keydown', setupWindowShowKeyDownEventHandler);
+
+setupClose.addEventListener('click', setupWindowClose);
+setupClose.addEventListener('keydown', setupWindowCloseKeyDownEventHandler);
+
+setupSubmit.addEventListener('click', setupWindowClose);
+setupSubmit.addEventListener('keydown', setupWindowCloseKeyDownEventHandler);

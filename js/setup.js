@@ -2,7 +2,9 @@
 
 var setupWindow = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
+var setupOpenIcon = document.querySelector('.setup-open-icon');
 var setupClose = setupWindow.querySelector('.setup-close');
+var setupSubmit = setupWindow.querySelector('.setup-submit');
 var inputName = setupWindow.querySelector('.setup-user-name');
 var wizardCoat = setupWindow.querySelector('#wizard-coat');
 var wizardEyes = setupWindow.querySelector('#wizard-eyes');
@@ -29,22 +31,8 @@ var fireballColors = [
   '#e848d5',
   '#e6e848'
 ];
-
-// Функция для открытия окна
-var setupWindowShow = function () {
-  setupWindow.classList.remove('invisible');
-};
-
-// Функция для закрытия окна
-var setupWindowClose = function () {
-  setupWindow.classList.add('invisible');
-};
-
-// По клику открываем окно
-setupOpen.addEventListener('click', setupWindowShow);
-
-// По клику удаляем окно
-setupClose.addEventListener('click', setupWindowClose);
+var ENTER_KEY_CODE = 13;
+var ESCAPE_KEY_CODE = 27;
 
 // Делаем инпут обязательным
 inputName.required = true;
@@ -71,4 +59,56 @@ wizardEyes.addEventListener('click', function () {
 // Меняем цвет фаерболла по клику
 fireball.addEventListener('click', function () {
   fireball.style.background = getRandomColor(fireballColors);
+});
+
+// Проверяем было ли нажатие
+var isActivateEvent = function (event) {
+  return event.keyCode && event.keyCode === ENTER_KEY_CODE;
+};
+
+// Метод для открытия диалога
+var setupWindowShow = function () {
+  setupWindow.classList.remove('invisible');
+  setupWindow.setAttribute('aria-hidden', false);
+  setupOpenIcon.setAttribute('aria-pressed', true);
+  setupClose.setAttribute('aria-pressed', false);
+  document.addEventListener('keydown', setupWindowKeyDownHandler);
+};
+
+// Метод для закрытия диалога
+var setupWindowClose = function () {
+  setupWindow.classList.add('invisible');
+  setupWindow.setAttribute('aria-hidden', true);
+  setupOpenIcon.setAttribute('aria-pressed', false);
+  setupClose.setAttribute('aria-pressed', true);
+  document.removeEventListener('keydown', setupWindowKeyDownHandler);
+};
+
+// Метод который слушает событие на кнопку ESCAPE, если событие произошло – закрывает диалог
+var setupWindowKeyDownHandler = function (event) {
+  if (event.keyCode === ESCAPE_KEY_CODE) {
+    setupWindow.classList.add('invisible');
+  }
+};
+
+setupOpen.addEventListener('click', setupWindowShow);
+setupOpen.addEventListener('keydown', function (event) {
+  if (isActivateEvent(event)) {
+    setupWindowShow();
+  }
+});
+
+setupClose.addEventListener('click', setupWindowClose);
+setupClose.addEventListener('keydown', function (event) {
+  if (isActivateEvent(event)) {
+    setupWindowClose();
+  }
+});
+
+setupSubmit.addEventListener('click', setupWindowClose);
+setupSubmit.addEventListener('keydown', function (event) {
+  if (isActivateEvent(event)) {
+    event.preventDefault();
+    setupWindowClose();
+  }
 });

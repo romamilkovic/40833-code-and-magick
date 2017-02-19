@@ -40,27 +40,6 @@ inputName.required = true;
 // Ограничиваем макс. кол-во символов
 inputName.maxlength = 50;
 
-// Создаем функцию для вычисления рандомного цвета
-function getRandomColor(colors) {
-  var randomNumber = Math.floor(Math.random() * colors.length);
-  return colors[randomNumber];
-}
-
-// Меняем цвет накидки мага по клику
-wizardCoat.addEventListener('click', function () {
-  wizardCoat.style.fill = getRandomColor(wizardCoatColors);
-});
-
-// Меняем цвет глаз мага по клику
-wizardEyes.addEventListener('click', function () {
-  wizardEyes.style.fill = getRandomColor(wizardEyesColors);
-});
-
-// Меняем цвет фаерболла по клику
-fireball.addEventListener('click', function () {
-  fireball.style.background = getRandomColor(fireballColors);
-});
-
 // Метод для открытия диалога
 var setupWindowShow = function () {
   setupWindow.classList.remove('invisible');
@@ -108,3 +87,7 @@ setupClose.addEventListener('keydown', setupWindowCloseKeyDownEventHandler);
 
 setupSubmit.addEventListener('click', setupWindowClose);
 setupSubmit.addEventListener('keydown', setupWindowCloseKeyDownEventHandler);
+
+window.colorizeElement(wizardCoat, wizardCoatColors, 'fill');
+window.colorizeElement(wizardEyes, wizardEyesColors, 'fill');
+window.colorizeElement(fireball, fireballColors, 'background');

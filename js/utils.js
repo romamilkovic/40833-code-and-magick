@@ -1,16 +1,22 @@
 'use strict';
 
-window.utils = {
-  getRandomElement: function (array) {
+window.utils = (function () {
+  var getRandomElement = function (array) {
     var randomIndex = Math.floor(Math.random() * array.length);
     return array[randomIndex];
-  },
+  };
 
-  getRandomElementExcept: function (array, currentArrayElement) {
-    var randomElement = this.getRandomElement(array);
+  var getRandomElementExcept = function (array, currentArrayElement) {
+    var randomElement = getRandomElement(array);
     while (currentArrayElement === randomElement) {
-      randomElement = this.getRandomElement(array);
+      randomElement = getRandomElement(array);
     }
     return randomElement;
-  },
-};
+  };
+
+  // Делаем данные функции доступными извне
+  return {
+    getRandomElement: getRandomElement,
+    getRandomElementExcept: getRandomElementExcept
+  };
+})();
